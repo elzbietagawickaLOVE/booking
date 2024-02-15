@@ -1,21 +1,24 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
+const numberOfGuests = require('./numberOfGuests')
 
 const roomSchema = new mongoose.Schema({
     size: Number,
-    numberOfGuests: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'NumberOfGuests'
-      },
+    numberOfGuests: numberOfGuests.schema,
     dailyPrice: Number,
-    hotel: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hotel'
-      },
       facilities: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Convenience'
-      }]
-
+      }],
+      images: [String],
+      ratings: [Number]
     })
 
-    module.exports = mongoose.model('Room', roomSchema)
+roomSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+    }
+})
+
+module.exports = mongoose.model('Room', roomSchema)

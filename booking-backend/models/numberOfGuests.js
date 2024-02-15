@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const numberOfGuestsSchema = new mongoose.Schema({
     adults: Number,
@@ -6,4 +6,4 @@ const numberOfGuestsSchema = new mongoose.Schema({
     infants: Number
 })
 
-exports.numberOfGuestsSchema = numberOfGuestsSchema
+module.exports = mongoose.model('NumberOfGuests', numberOfGuestsSchema)

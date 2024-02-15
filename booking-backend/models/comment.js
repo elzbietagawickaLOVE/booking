@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const commentSchema = new Schema({
     content: {
@@ -8,15 +8,23 @@ const commentSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    hotel : {
+        type: Schema.Types.ObjectId,
+        ref: 'Hotel'
+    },
+    date: {
+        type: Date,
+        required: true
     }
-    });
+});
 
-    commentSchema.set('toJSON', {
-        transform: (document, returnedObject) => {
-            returnedObject.id = returnedObject._id.toString()
-            delete returnedObject._id
-            delete returnedObject.__v
-        }
-    })
+commentSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+    }
+});
 
-    module.exports = mongoose.model('Comment', commentSchema)
+module.exports = mongoose.model('Comment', commentSchema)

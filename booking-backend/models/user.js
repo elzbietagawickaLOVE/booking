@@ -1,21 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
         minlength: 3
     },
+    email: String,
     passwordHash: {
         type: String,
         required: true
     },
     comments: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     bookings: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Booking'
     }]
 });

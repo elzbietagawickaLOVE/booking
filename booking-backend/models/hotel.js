@@ -1,18 +1,21 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const hotelSchema = new mongoose.Schema({
     name: String,
-    adress: String,
+    address: String,
+    locationUrl: String,
     description: String,
-    rooms: {
+    rooms: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room'
-      },
-      facilities: {
+      }],
+      facilities: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Facility'
-      },
-    comments: [String]
+      }],
+    comments: [String],
+    ratings: [Number]
 })
 
 hotelSchema.set('toJSON', {
@@ -22,5 +25,7 @@ hotelSchema.set('toJSON', {
         delete returnedObject.__v
     }
 })
+
+hotelSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('Hotel', hotelSchema)
