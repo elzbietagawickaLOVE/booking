@@ -1,5 +1,6 @@
 const typeDefs = `
     type Hotel {
+        id: ID!
         name: String!
         address: String!
         locationUrl: String!
