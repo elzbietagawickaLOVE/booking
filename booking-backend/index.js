@@ -17,7 +17,8 @@ const { WebSocketServer } = require('ws')
 const { useServer } = require('graphql-ws/lib/use/ws')
 const { expressMiddleware } = require('@apollo/server/express4')
 require('dotenv').config()
-
+const User = require('./models/user')
+const jwt = require('jsonwebtoken')
 
 
 mongoose.set('strictQuery', false)
