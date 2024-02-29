@@ -1,16 +1,19 @@
 const HotelList = (props) => {
-    const hotels = props.hotels;
-    console.log(hotels);
     return (
         <div>
         <h1>Hotel List</h1>
-        <ul>
             {props.hotels.map(hotel => (
-            <li key={hotel.id}>
-                {hotel.name} - {hotel.id}
-            </li>
+                <div key={hotel.id} className="card" style={{ marginBottom: '20px' }}>
+                    <div className="card-header">
+                        {hotel.name}
+                    </div>
+                    <div className="card-body">
+                        <h5 className="card-title">{hotel.name}</h5>
+                        <p className="card-text">{hotel.description}</p>
+                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
             ))}
-        </ul>
         </div>
     );
     }

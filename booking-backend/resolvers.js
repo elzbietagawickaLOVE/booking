@@ -28,10 +28,16 @@ const facilityResolver = async (facilities) => {
 const resolvers = {
     Query: {
         hotelCount: () => Hotel.collection.countDocuments(),
-        allHotels: async () => { return await Hotel.find({}) },
+        allHotels: async (context) => { 
+            if(context === null)
+                return []
+            return await Hotel.find({}).populate('rooms')
+ },
         allRooms: async () => { return await Room.find({}) },
         allFacilities: async () => { return await Facility.find({}) },
         me: async (root, args, context) => {
+            if(context === null)
+                return null
             return await context.currentUser
         }
     },
@@ -112,7 +118,6 @@ const resolvers = {
                 username: user.username,
                 id: user._id
             }
-
             return { value: jwt.sign(userForToken, process.env.SECRET) }
     }  } 
 }
