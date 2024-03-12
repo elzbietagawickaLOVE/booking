@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import './bootstrap.css'
 import { setContext } from '@apollo/client/link/context'
 import { createHttpLink } from '@apollo/client/link/http'
 import { ApolloClient, InMemoryCache, ApolloProvider, split } from '@apollo/client'
