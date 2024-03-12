@@ -1,18 +1,48 @@
-import { useApolloClient, useQuery } from '@apollo/client';
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ALL_HOTELS } from './queries/hotelQueries'
+import { useApolloClient, useQuery } from '@apollo/client'
+import { useEffect, useState } from 'react'
+import { Link, Routes } from 'react-router-dom'
+import { ALL_HOTELS, ME } from './queries/hotelQueries'
 import HotelList from './components/hotelList'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import LoginForm from './components/loginForm'
 
 //**************ŁĄCZENIE Z SERWEREM*********************/
 const App = () => {
+  const [token, setToken] = useState(localStorage.getItem('authorization'));
+  const [user, setUser] = useState(null);
+
+
+  const logout = () => {
+    setToken(null);
+    localStorage.clear();
+    client.resetStore();
+  }
+
+  const resultUser = useQuery(ME, {
+    pollInterval: 5000
+  }
+  );
+  const handleUser = (data) => {
+    console.log('data', data)
+    if(data !== undefined) {
+      setUser(data.data.me);
+    }
+  }
+
+  useEffect(() => {
+    handleUser(resultUser);
+  }, [resultUser.data]);
+  
   const client = useApolloClient();
   const hotels = useQuery(ALL_HOTELS, {
     pollInterval: 5000,
   });
-  
+
   if (hotels.loading) return <p>Loading...</p>;
-  if (hotels.error) return <p>Error</p>;
+  if (hotels.error) {
+    console.log(hotels.error)
+    return <p>Error</p>;
+  }
   return (
 //************************RÓŻOWY PASEK****************************/
     <div>
@@ -72,6 +102,4 @@ const App = () => {
 {/********************************************************************/}
 
 export default App;
-{/**********************notatka do commita*************************************** 
 
-*********************************************************************************/}
