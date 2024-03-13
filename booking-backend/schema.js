@@ -6,7 +6,7 @@ const typeDefs = `
         locationUrl: String!
         description: String!
         rooms: [Room!]
-        facilities: [Facility!]!
+        facilities: [Facility!]
         comments: [Comment!]!
         ratings: [Int!]
     }
@@ -18,7 +18,6 @@ const typeDefs = `
         hotel: Hotel!
         facilities: [Facility!]!
         images: [String]
-        ratings: [Int!]
     }
 
     type Booking {
@@ -87,6 +86,8 @@ const typeDefs = `
         ): Room
         addFacility(
             name: String!
+            description: String!
+            icon: String!
         ): Facility
         addNumberOfGuests(
             adults: Int!

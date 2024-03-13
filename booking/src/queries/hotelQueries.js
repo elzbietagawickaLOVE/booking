@@ -28,4 +28,32 @@ export const ME = gql`
     }
 `;
 
+export const CREATE_HOTEL = gql`
+    mutation createHotel($name: String!, $address: String!, $locationUrl: String!, $description: String!) {
+        addHotel(
+            name: $name,
+            address: $address,
+            locationUrl: $locationUrl,
+            description: $description
+        ) {
+            name
+            address
+            locationUrl
+            description
+        }
+    }
+`;
 
+export const CREATE_CONVENIENCE = gql`
+    mutation addFacility($name: String!, $description: String!, $icon: String!) {
+        addFacility(
+            name: $name,
+            description: $description,
+            icon: $icon
+        ) {
+            name
+            description
+            icon
+        }
+    }
+`;

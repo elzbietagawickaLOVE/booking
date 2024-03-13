@@ -51,13 +51,10 @@ const resolvers = {
     },
     Mutation: {
         addHotel: async (root, args) => {
-            const hotelId = new mongoose.Types.ObjectId()
-
             const facilities = facilityResolver(args.facilities)
 
             const rooms = await Promise.all(
                 args.rooms.map(async room => {
-                    const roomId = new mongoose.Types.ObjectId()
                     const imagePaths = await Promise.all(
                         room.imagePaths = room.imagePaths.map(imagePath => {
                             const image = fs.readFileSync(imagePath)
@@ -65,13 +62,13 @@ const resolvers = {
                         })
                     )
                     const roomFacilities = facilityResolver(room.facilities)
-                    const newRoom = new Room({ ...room, images: imagePaths, _id: roomId, hotel: hotelId, facilities: roomFacilities, ratings: []})
+                    const newRoom = new Room({ ...room, images: imagePaths, facilities: roomFacilities})
                     const savedRoom = await newRoom.save()
                     return savedRoom._id
                 })
             )
 
-            const hotel = new Hotel({ ...args, rooms, facilities, _id: hotelId, ratings: [], comments: []})
+            const hotel = new Hotel({ ...args, rooms, facilities, ratings: [], comments: []})
             return hotel.save()
         },
         addRoom: async (root, args) => {

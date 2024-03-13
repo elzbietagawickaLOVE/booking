@@ -10,7 +10,6 @@ const roomSchema = new mongoose.Schema({
         ref: 'Convenience'
       }],
       images: [String],
-      ratings: [Number]
     })
 
 roomSchema.set('toJSON', {

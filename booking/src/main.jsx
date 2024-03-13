@@ -8,7 +8,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, split } from '@apollo/clie
 import { getMainDefinition } from '@apollo/client/utilities'
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('authorization')
