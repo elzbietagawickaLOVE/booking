@@ -4,3 +4,8 @@ html, body {
     font-family: 'Roboto', sans-serif;
     background-color: #f6f6f6;
 }
+
+.hotelName:hover {
+    color: #ff5a5f;
+    cursor: pointer;
+}

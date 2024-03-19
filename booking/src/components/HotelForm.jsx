@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client'
 import { CREATE_CONVENIENCE } from '../queries/hotelQueries'
 import { RoomToAdd } from '../models/RoomToAdd'
 import { NumberOfGuests } from '../models/NumberOfGuests'
+import { CREATE_HOTEL } from '../queries/hotelQueries'
 
 
 const HotelForm = () => {
@@ -15,7 +16,7 @@ const HotelForm = () => {
     };
 
     const [room, setRoom] = useState(new RoomToAdd());
-    const [rooms, setRooms] = useState([{}]);
+    const [rooms, setRooms] = useState([new RoomToAdd()]);
     const [numberOfGuests, setNumberOfGuests] = useState(new NumberOfGuests());
     const [convenience, setConvenience] = useState(new Convenience());
     const [imagePaths, setImagePaths] = useState([]);
@@ -24,6 +25,13 @@ const HotelForm = () => {
             console.log('error', error.graphQLErrors[0].message);
         }
     })
+
+    const [createHotel, hotelResult] = useMutation(CREATE_HOTEL, {
+        onError: (error) => {
+            console.log('error', error.graphQLErrors[0].message);
+        }
+    })
+
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         const paths = files.map(file => URL.createObjectURL(file));
@@ -41,7 +49,10 @@ const HotelForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(hotel)
+        setHotel({ ...hotel, rooms: Array.of(rooms), facilities: [] });
+        console.log(rooms)
+        console.log(hotel);
+        createHotel({ variables: { name: hotel.name, address: hotel.address, locationUrl: hotel.locationUrl, description: hotel.description, rooms: hotel.rooms, facilities: hotel.facilities } })
     }
 
     const handleConvenienceChange = (e) => {
@@ -70,22 +81,22 @@ const HotelForm = () => {
         )}
         <form onSubmit={handleSubmit}>
         nazwa hotelu: <input type="text" className='form-control' name="name" value={hotel.name} onChange={handleChange} />
-        adres: <input type="text" className='form-control' name="name" value={hotel.address} onChange={handleChange} />
-        link do mapy: <input type="text" className='form-control' name="name" value={hotel.locationUrl} onChange={handleChange} />
-        opis: <input type="text" className='form-control' name="name" value={hotel.description} onChange={handleChange} />
+        adres: <input type="text" className='form-control' name="address" value={hotel.address} onChange={handleChange} />
+        link do mapy: <input type="text" className='form-control' name="locationUrl" value={hotel.locationUrl} onChange={handleChange} />
+        opis: <input type="text" className='form-control' name="description" value={hotel.description} onChange={handleChange} />
         <button type="submit" className='btn btn-primary' style={{marginTop:'20px'}}>Dodaj hotel</button>
 
+        
+        </form>
         <h2>Dodaj pokoje</h2>
         rozmiar: <input type="text" className='form-control' name="size" value={room.size} onChange={(e) => setRoom({ ...room, size: e.target.value })} />
-        cena: <input type="text" className='form-control' name="price" value={room.price} onChange={(e) => setRoom({ ...room, price: e.target.value })} />
+        cena: <input type="text" className='form-control' name="price" value={room.dailyPrice} onChange={(e) => setRoom({ ...room, dailyPrice: e.target.value })} />
         <h3>ilosc osob</h3>
         dorośli: <input type="text" className='form-control' name="adults" value={numberOfGuests.adults} onChange={(e) => setNumberOfGuests({ ...numberOfGuests, adults: e.target.value })} />
         dzieci: <input type="text" className='form-control' name="children" value={numberOfGuests.children} onChange={(e) => setNumberOfGuests({ ...numberOfGuests, children: e.target.value })} />
         niemowlęta: <input type="text" className='form-control' name="infants" value={numberOfGuests.infants} onChange={(e) => setNumberOfGuests({ ...numberOfGuests, infants: e.target.value })} />
         zdjecia: <input type='file' className='form-control' onChange={handleFileChange} name="photos" multiple/>
-        <button type="submit" className='btn btn-primary' onClick={saveRoom} style={{marginTop:'20px'}}>nastepny pokoj</button>
-        </form>
-        
+        <button className='btn btn-primary' onClick={saveRoom} style={{marginTop:'20px'}}>nastepny pokoj</button>
 
         <form onSubmit={handleConvenienceSubmit}>
         nazwa udogodnienia: <input type="text" className='form-control' name="name" value={convenience.name} onChange={handleConvenienceChange} />

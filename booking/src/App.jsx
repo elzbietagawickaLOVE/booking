@@ -95,7 +95,7 @@ const App = () => {
   </div>
 </nav>
         
-        <main style={{ width: '1200px', margin: 'auto' }}>
+        <main style={{ width: '1350px', margin: 'auto' }}>
         
         <Routes>
           <Route path="/" element={<h1>Home</h1>} />

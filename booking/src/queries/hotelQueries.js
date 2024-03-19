@@ -6,6 +6,7 @@ export const ALL_HOTELS = gql`
             name
             id
             description
+            address
             ratings
         }
     }
@@ -29,17 +30,33 @@ export const ME = gql`
 `;
 
 export const CREATE_HOTEL = gql`
-    mutation createHotel($name: String!, $address: String!, $locationUrl: String!, $description: String!) {
+    mutation addHotel($name: String!, $address: String!, $locationUrl: String!, $description: String!, $rooms: [RoomInput], $facilities: [FacilityInput]) {
         addHotel(
             name: $name,
             address: $address,
             locationUrl: $locationUrl,
-            description: $description
+            description: $description,
+            rooms: $rooms,
+            facilities: $facilities
         ) {
             name
             address
             locationUrl
             description
+            rooms {
+                size
+                dailyPrice
+                numberOfGuests {
+                    adults
+                    children
+                    infants
+                }
+            }
+            facilities {
+                name
+                description
+                icon
+            }
         }
     }
 `;

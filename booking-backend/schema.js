@@ -75,7 +75,6 @@ const typeDefs = `
             description: String!
             rooms: [RoomInput!]
             facilities: [FacilityInput!]
-            comments: [String!]
         ): Hotel
         addRoom(
             size: Int!
