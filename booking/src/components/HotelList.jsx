@@ -10,11 +10,11 @@ const HotelList = (props) => {
     return (
         <div>
         <h1>Hotel List</h1>
-        <div className="card" style={{ float: 'left', height: '500px', width: '30%', marginRight: '10px' }}>
+        <div className="card" style={{ float: 'left', display: 'inline-block', height: '500px', width: '30%', marginRight: '10px' }}>
 
         </div>
             {props.hotels.map(hotel => (
-                <div key={hotel.id} className="card" style={{ marginBottom: '20px', width: 'calc(70% - 10px)', padding: '10px', justifyContent: 'start', flexDirection: 'row' }}>
+                <div key={hotel.id} className="card" style={{ marginBottom: '20px', width: 'calc(70% - 10px)', padding: '10px', justifyContent: 'start', flexDirection: 'row', background: 'white' }}>
                     
                     <div style={{ width: '30%', height: '100%'}}>
                         <img src='https://a.allegroimg.com/original/11d339/8dc922454e49bc8fa639ffa3dbda/DORIS-NEMO-RYBKA-DO-AKWARIUM-PREZENT-WIGILIJNY' width='200px' height='100%' alt="..." />

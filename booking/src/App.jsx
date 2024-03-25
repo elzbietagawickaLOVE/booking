@@ -6,6 +6,7 @@ import HotelList from './components/hotelList'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LoginForm from './components/loginForm'
 import HotelForm from './components/HotelForm'
+import Home from './components/Home'
 
 //**************ŁĄCZENIE Z SERWEREM*********************/
 const App = () => {
@@ -79,13 +80,13 @@ const App = () => {
       <Link class="nav-link" style={{ color: 'transparent'}} to="/">Home</Link>
       </li>
       <li class="nav-item">
-      <Link class="nav-link" to="/hotels">Hotels</Link>
+      <Link class="nav-link" to="/hotels"><button className='btn btn-outline-primary'>Hotels</button></Link>
       </li>
       <li class="nav-item">
-      <Link class="nav-link" to="/hotelForm">Add a hotel</Link>
+      <Link class="nav-link" to="/hotelForm"><button className='btn btn-outline-primary'>Add a hotel</button></Link>
       </li>
       <li class="nav-item">
-      {token === null ? <Link class="nav-link" to="/login">Login</Link> : <Link class="nav-link" onClick={logout}>Logout</Link>}
+      {token === null ? <Link class="nav-link" to="/login"><button className='btn btn-outline-primary'>Login</button></Link> : <Link class="nav-link" onClick={logout}><button className='btn btn-outline-primary'>Logout</button></Link>}
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
@@ -95,10 +96,10 @@ const App = () => {
   </div>
 </nav>
         
-        <main style={{ width: '1350px', margin: 'auto' }}>
+        <main style={{ width: '70%', margin: 'auto' }}>
         
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<Home user={user} />} />
           <Route path="/hotels" element={<HotelList hotels={hotels.data.allHotels} />} />
           <Route path='/hotelForm' element={<HotelForm />} />
           <Route path="/login" element={<LoginForm setToken={setToken} token={token} setUser={setUser} />} />
