@@ -10,3 +10,13 @@ html, body {
     color: #ff5a5f;
     cursor: pointer;
 }
+
+::selection {
+    background-color: #99ddff;
+}
+
+.option:hover {
+    background-color: #a72095;
+    cursor: no-drop;
+}
+
